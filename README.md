@@ -1,8 +1,3 @@
-
-You’re right — the status section needs a **Trust + Data Provenance** block so the whole package reads “enterprise-ready” instead of “just uptime.” Here’s an upgraded **README.md markdown** you can paste as-is.
-
----
-
 # 🚦 CPI Score API — Status & Trust
 
 ## 🔍 Live Status Dashboard
