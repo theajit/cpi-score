@@ -12,19 +12,69 @@ def _store():
 @router.get("/")
 def root():
     return {
-        "api": "CPI 2025 Score API",
+        "name": "CPI Score API",
         "version": "1.0.0",
-        "source": "Transparency International — Corruption Perceptions Index 2025",
-        "total_countries": len(_store()["data"]),
-        "endpoints": {
-            "GET /countries": "All countries. Filters: ?region=&min_score=&max_score=",
-            "GET /countries/{code}": "Lookup by ISO2 or ISO3",
-            "GET /regions": "Region summaries",
-            "GET /regions/{region}": "Countries in a region",
-            "GET /rankings": "Global ranking. ?order=desc&limit=10",
-            "GET /health": "Health check",
+        "status": "active",
+        "description": "Public API providing country and regional corruption perception scores based on Transparency International CPI 2025 dataset.",
+        "source": {
+            "organization": "Transparency International",
+            "dataset": "Corruption Perceptions Index 2025",
+            "coverage": len(_store()["data"]),
         },
+        "base_url": "/",
+        "routes": {
+            "countries": {
+            "endpoint": "/countries",
+            "method": "GET",
+            "description": "Retrieve corruption scores for all countries.",
+            "filters": {
+                "region": "Filter countries by region name",
+                "min_score": "Return countries with score greater than or equal to value",
+                "max_score": "Return countries with score less than or equal to value"
+            },
+            "example": "/countries?region=Asia-Pacific&min_score=50"
+            },
+            "country_lookup": {
+            "endpoint": "/countries/{code}",
+            "method": "GET",
+            "description": "Retrieve CPI data for a specific country using ISO2 or ISO3 code.",
+            "example": "/countries/IND"
+            },
+            "regions": {
+            "endpoint": "/regions",
+            "method": "GET",
+            "description": "Retrieve CPI score summaries grouped by regions."
+            },
+            "region_lookup": {
+            "endpoint": "/regions/{region}",
+            "method": "GET",
+            "description": "Retrieve CPI data for all countries within a region.",
+            "example": "/regions/Europe"
+            },
+            "rankings": {
+            "endpoint": "/rankings",
+            "method": "GET",
+            "description": "Retrieve global CPI rankings.",
+            "filters": {
+                "order": "Sort order: asc or desc",
+                "limit": "Number of records to return"
+            },
+            "example": "/rankings?order=desc&limit=10"
+            },
+            "health": {
+            "endpoint": "/health",
+            "method": "GET",
+            "description": "Check API availability and service health."
+            }
+        },
+        "meta": {
+            "default_format": "application/json",
+            "authentication": "Not required (public dataset)",
+            "rate_limit": "Standard public usage limits apply",
+            "last_updated": "2025 CPI Release"
+        }
     }
+
 
 
 @router.get("/health")
