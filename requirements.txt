@@ -1,0 +1,4 @@
+fastapi==0.128.7
+uvicorn==0.40.0
+python-dotenv==1.2.1
+orjson==3.11.7
